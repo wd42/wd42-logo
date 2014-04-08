@@ -1,0 +1,100 @@
+$green: #5bbb72;
+$purple: #a4448d;
+
+//@hack: px be like bad, but my trig calc doesnt like rems/ems atm
+$w-factor: 2;
+$h-factor: 1;
+$step: 150px;
+
+$width: $w-factor*$step;
+$height: $h-factor*$step;
+$font-size: 55px;
+
+.logo-group {
+  margin: 50px 0;
+}
+
+.logo {
+  position: relative;
+  width: 2*$width;
+  display: block;
+  font-family: 'Helvetica Neue';
+
+  span {
+    vertical-align: middle;
+    font-size: $font-size;
+    line-height: $height;
+    height: $height;
+    text-align: center;
+    width: $width;
+    position: relative;
+    display: inline-block;
+
+    &:before {
+      //This ends up being drawn at 42deg on the inside of the logo which is what we want.
+      @include transform(skewX(-48deg));
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  }
+
+  .name {
+    color: white;
+    font-weight: 600;
+    &:before {
+      left: 0;
+      top: 0;
+    }
+  }
+
+  .organisation {
+    font-weight: 200;
+    &:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: white;
+    }
+  }
+
+  &.extended {
+    span {
+      font-size: 1em;
+      line-height: $height/4;
+      height: $height/4;
+    }
+    &.pd42 {
+      margin-left: $width - round((($height/4) / sin(42deg)) * sin(48deg));
+    }
+  }
+
+  &.wd42 {
+    .name {
+      &:before {
+        background: $green;
+      }
+    }
+
+    .organisation {
+      color: $green;
+    }
+  }
+
+  &.pd42 {
+    margin-left: $width - round(($height / sin(42deg)) * sin(48deg));
+
+    .name {
+      &:before {
+        background: $purple;
+      }
+    }
+
+    .organisation {
+      color: $purple;
+    }
+  }
+
+}

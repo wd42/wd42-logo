@@ -1,0 +1,54 @@
+@mixin opacity( $opacity ){
+	filter: alpha(opacity=$opacity*100); // IE6-IE8
+	opacity: $opacity; // Chrome 4+, FF2+, Saf3.1+, Opera 9+, IE9, iOS 3.2+, Android 2.1+
+}
+
+@mixin respond-to($media) {
+  @media #{$media} { @content; }
+}
+
+@mixin font-size($size) {
+  @include rem(font-size, $size);
+}
+
+@mixin line-height($size) {
+  @include rem(line-height, $size);
+}
+
+@mixin rem($property, $values) {
+  $basePx: 16;
+
+  @if $defaultFontSize != null {
+    $basePx: $defaultFontSize * 16;
+  }
+
+  $px: ();
+  $rem: ();
+
+  @each $value in $values {
+    @if $value == 0 or $value == auto {
+      $px: append($px, $value);
+      $rem: append($rem, $value);
+    } @else {
+      $unit: unit($value);
+      $val: strip-units($value);
+
+      @if $unit == "px" or $unit != "rem" {
+        $px: append($px, $value);
+        $rem: append($rem, ($val / $basePx + rem));
+      }
+
+      @if $unit == "rem" {
+        $px: append($px, ($val * $basePx + px));
+        $rem: append($rem, $value);
+      }
+    }
+  }
+
+  #{$property}: $px;
+  #{$property}: $rem;
+}
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}

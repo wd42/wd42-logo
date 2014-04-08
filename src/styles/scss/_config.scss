@@ -1,0 +1,8 @@
+$mobile-context: "only screen and (max-width: 767px)";
+$tablet-context: "only screen and (min-width: 768px)";
+$tablet-strict-context: "only screen and (min-width: 768px) and (orientation: portrait)";
+$desktop-context: "only screen and (min-width: 768px) and (orientation: landscape)";
+$large-desktop-context: "only screen and (min-width: 1200px) and (orientation: landscape)";
+
+//FONTS
+$defaultFontSize: 1;
